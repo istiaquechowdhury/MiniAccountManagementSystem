@@ -1,0 +1,34 @@
+﻿@page
+@model MiniAccountManagementSystem.Pages.Admin.AssignAccessModel
+@{
+}
+<h2>Assign Module Access to Role</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="RoleId">Select Role</label>
+        <select asp-for="RoleId" class="form-control" asp-items="Model.Roles">
+            <option value="">-- Select Role --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="ModuleId">Module</label>
+        <select asp-for="ModuleId" class="form-control" asp-items="Model.Modules">
+            <option value="">-- Select Module --</option>
+        </select>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input" asp-for="CanView" />
+        <label class="form-check-label" for="CanView">Can View</label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input" asp-for="CanEdit" />
+        <label class="form-check-label" for="CanEdit">Can Edit</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Assign Access</button>
+</form>
+
