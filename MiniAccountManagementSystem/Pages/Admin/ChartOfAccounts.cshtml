@@ -1,0 +1,144 @@
+﻿@page
+@model MiniAccountManagementSystem.Pages.Admin.ChartOfAccountsModel
+@{
+}
+
+<h2>Chart of Accounts</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<form method="post" asp-page-handler="Insert">
+    <div class="form-group">
+        <label asp-for="AccountName">Account Name</label>
+        <input asp-for="AccountName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AccountCode">Account Code</label>
+        <input asp-for="AccountCode" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ParentAccountId">Parent Account</label>
+        <select asp-for="ParentAccountId" asp-items="Model.ParentAccounts" class="form-control">
+            <option value="">-- None --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Account</button>
+</form>
+
+<hr />
+
+<h4>Existing Accounts</h4>
+
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Account Name</th>
+            <th>Account Code</th>
+            <th>Parent Account</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.AccountsTable != null)
+        {
+            foreach (System.Data.DataRow row in Model.AccountsTable.Rows)
+            {
+                <tr>
+                    <td>@row["AccountName"]</td>
+                    <td>@row["AccountCode"]</td>
+                    <td>@row["ParentAccountName"]</td>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@row["AccountId"]" onsubmit="return confirm('Are you sure you want to delete this account?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+
+                    <td>
+                        <button type="button" class="btn btn-sm btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editModal"
+                                data-id="@row["AccountId"]"
+                                data-name="@row["AccountName"]"
+                                data-code="@row["AccountCode"]"
+                                data-parent="@row["ParentAccountId"]"
+                                onclick="fillEditModalFromButton(this)">
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="Update">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="AccountId" id="editAccountId" />
+                    <div class="mb-3">
+                        <label for="editAccountName" class="form-label">Account Name</label>
+                        <input type="text" name="AccountName" class="form-control" id="editAccountName" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editAccountCode" class="form-label">Account Code</label>
+                        <input type="text" name="AccountCode" class="form-control" id="editAccountCode" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editParentAccountId" class="form-label">Parent Account</label>
+                        <select name="ParentAccountId" class="form-control" id="editParentAccountId">
+                            <option value="">-- None --</option>
+                            @foreach (var account in Model.ParentAccounts)
+                            {
+                                <option value="@account.Value">@account.Text</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+
+    <script>
+            function fillEditModalFromButton(button) {
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const code = button.getAttribute('data-code');
+            const parentId = button.getAttribute('data-parent');
+
+            document.getElementById('editAccountId').value = id;
+            document.getElementById('editAccountName').value = name;
+            document.getElementById('editAccountCode').value = code;
+            document.getElementById('editParentAccountId').value = parentId || '';
+        }
+    </script>
+
+}
+
+
+

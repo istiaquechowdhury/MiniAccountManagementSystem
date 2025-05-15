@@ -67,6 +67,21 @@ CREATE TABLE RoleModuleAccess (
 );
 Go
 
+/****** Create ChartOfAccounts Table  ******/
+
+CREATE TABLE ChartOfAccounts (
+    AccountId INT PRIMARY KEY IDENTITY(1,1),
+    AccountName NVARCHAR(100) NOT NULL,
+    ParentAccountId INT NULL, -- self-reference for hierarchy
+    AccountCode NVARCHAR(50) UNIQUE NOT NULL,
+    IsActive BIT NOT NULL DEFAULT 1,
+    CreatedAt DATETIME NOT NULL DEFAULT GETDATE(),
+
+    CONSTRAINT FK_ChartOfAccounts_Parent FOREIGN KEY (ParentAccountId)
+        REFERENCES ChartOfAccounts(AccountId)
+);
+GO
+
 
 
 /****** Stored Procedure: Add a New Role ******/
@@ -166,6 +181,62 @@ BEGIN
     ORDER BY ModuleName
 END
 GO
+
+
+/****** Stored Procedure: Create,Update,Delete ChartOfAccount ******/
+
+CREATE PROCEDURE sp_ManageChartOfAccounts
+    @Mode NVARCHAR(10), -- 'Insert', 'Update', 'Delete'
+    @AccountId INT = NULL,
+    @AccountName NVARCHAR(100) = NULL,
+    @ParentAccountId INT = NULL,
+    @AccountCode NVARCHAR(50) = NULL
+AS
+BEGIN
+    IF @Mode = 'Insert'
+    BEGIN
+        INSERT INTO ChartOfAccounts (AccountName, ParentAccountId, AccountCode)
+        VALUES (@AccountName, @ParentAccountId, @AccountCode)
+    END
+
+    ELSE IF @Mode = 'Update'
+    BEGIN
+        UPDATE ChartOfAccounts
+        SET 
+            AccountName = @AccountName,
+            ParentAccountId = @ParentAccountId,
+            AccountCode = @AccountCode
+        WHERE AccountId = @AccountId
+    END
+
+    ELSE IF @Mode = 'Delete'
+    BEGIN
+        DELETE FROM ChartOfAccounts
+        WHERE AccountId = @AccountId
+    END
+END;
+GO
+
+
+/****** Stored Procedure: GetChartOfAccounts ******/
+CREATE PROCEDURE sp_GetChartOfAccounts
+AS
+BEGIN
+    SELECT 
+        a.AccountId,
+        a.AccountName,
+        a.AccountCode,
+        a.ParentAccountId,
+        p.AccountName AS ParentAccountName
+    FROM ChartOfAccounts a
+    LEFT JOIN ChartOfAccounts p ON a.ParentAccountId = p.AccountId
+    ORDER BY a.ParentAccountId, a.AccountName
+END;
+GO
+
+
+
+
 
 
 
