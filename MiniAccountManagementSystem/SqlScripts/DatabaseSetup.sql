@@ -217,6 +217,14 @@ BEGIN
 END;
 GO
 
+/**** Stored Procedure: For seeding the data in ChartOfAccounts ******/
+exec sp_ManageChartOfAccounts
+    @Mode = 'Insert',
+    @AccountName = 'Assets',
+    @ParentAccountId = Null,
+    @AccountCode = '1020';
+    Go
+
 
 /****** Stored Procedure: GetChartOfAccounts ******/
 CREATE PROCEDURE sp_GetChartOfAccounts

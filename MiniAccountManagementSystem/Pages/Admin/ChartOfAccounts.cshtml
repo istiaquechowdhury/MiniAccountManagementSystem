@@ -14,11 +14,14 @@
     <div class="form-group">
         <label asp-for="AccountName">Account Name</label>
         <input asp-for="AccountName" class="form-control" />
+        <span asp-validation-for="AccountName" class="bg-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="AccountCode">Account Code</label>
         <input asp-for="AccountCode" class="form-control" />
+        <span asp-validation-for="AccountCode" class="bg-danger"></span>
+
     </div>
 
     <div class="form-group">
