@@ -82,6 +82,37 @@ CREATE TABLE ChartOfAccounts (
 );
 GO
 
+/****** Create Vouchers Table  ******/
+CREATE TABLE Vouchers (
+    VoucherId INT PRIMARY KEY IDENTITY(1,1),
+    VoucherType VARCHAR(20) NOT NULL, -- 'Journal', 'Payment', 'Receipt'
+    VoucherDate DATE NOT NULL,
+    ReferenceNo VARCHAR(50) NOT NULL,
+    Narration NVARCHAR(500) NULL,
+    CreatedBy NVARCHAR(50)  NULL,
+    CreatedDate DATETIME DEFAULT GETDATE()
+);
+GO
+
+-- VoucherEntries Table
+CREATE TABLE VoucherEntries (
+    EntryId INT PRIMARY KEY IDENTITY(1,1),
+    VoucherId INT NOT NULL FOREIGN KEY REFERENCES Vouchers(VoucherId),
+    AccountId INT NOT NULL FOREIGN KEY REFERENCES ChartOfAccounts(AccountId),
+    DebitAmount DECIMAL(18, 2) NOT NULL DEFAULT 0,
+    CreditAmount DECIMAL(18, 2) NOT NULL DEFAULT 0
+);
+GO
+
+-- VoucherEntryType Table
+CREATE TYPE VoucherEntryType AS TABLE
+(
+    AccountId INT,
+    DebitAmount DECIMAL(18, 2),
+    CreditAmount DECIMAL(18, 2)
+);
+GO
+
 
 
 /****** Stored Procedure: Add a New Role ******/
@@ -241,6 +272,110 @@ BEGIN
     ORDER BY a.ParentAccountId, a.AccountName
 END;
 GO
+
+/****** Stored Procedure: sp_SaveVouchar ******/
+
+CREATE PROCEDURE sp_SaveVoucher
+    @VoucherDate DATE,
+    @ReferenceNo NVARCHAR(50),
+    @VoucherType NVARCHAR(20), -- Journal, Payment, Receipt
+    @Entries VoucherEntryType READONLY
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Validate debit = credit
+    DECLARE @TotalDebit DECIMAL(18, 2), @TotalCredit DECIMAL(18, 2);
+
+    SELECT
+        @TotalDebit = SUM(DebitAmount),
+        @TotalCredit = SUM(CreditAmount)
+    FROM @Entries;
+
+    IF @TotalDebit <> @TotalCredit
+    BEGIN
+        RAISERROR('Total Debit and Credit must be equal.', 16, 1);
+        RETURN;
+    END
+
+    -- Insert into Vouchers
+    INSERT INTO Vouchers (VoucherDate, ReferenceNo, VoucherType)
+    VALUES (@VoucherDate, @ReferenceNo, @VoucherType);
+
+    DECLARE @VoucherId INT = SCOPE_IDENTITY();
+
+    -- Insert each entry line
+    INSERT INTO VoucherEntries (VoucherId, AccountId, DebitAmount, CreditAmount)
+    SELECT
+        @VoucherId,
+        AccountId,
+        DebitAmount,
+        CreditAmount
+    FROM @Entries;
+
+    -- Optional success return
+    SELECT 'Voucher saved successfully.' AS Message, @VoucherId AS VoucherId;
+END
+GO
+
+
+/****** Stored Procedure: sp_GetVoucherList ******/
+CREATE PROCEDURE sp_GetVoucherList
+AS
+BEGIN
+    SELECT VoucherId, VoucherDate, ReferenceNo, VoucherType
+    FROM Vouchers
+    ORDER BY VoucherDate DESC
+END
+GO
+
+/****** Stored Procedure: sp_GetVoucherById ******/
+CREATE PROCEDURE sp_GetVoucherById
+    @VoucherId INT
+AS
+BEGIN
+    SELECT VoucherId, VoucherDate, ReferenceNo, VoucherType
+    FROM Vouchers
+    WHERE VoucherId = @VoucherId
+END
+GO
+
+
+/****** Stored Procedure: sp_GetVoucherEntriesByVoucherId ******/
+CREATE PROCEDURE sp_GetVoucherEntriesByVoucherId
+    @VoucherId INT
+AS
+BEGIN
+    SELECT ve.DebitAmount, ve.CreditAmount, c.AccountName
+    FROM VoucherEntries ve
+    INNER JOIN ChartOfAccounts c ON ve.AccountId = c.AccountId
+    WHERE ve.VoucherId = @VoucherId
+END
+GO
+
+/****** Stored Procedure: sp_DeleteVoucher ******/
+
+CREATE PROCEDURE sp_DeleteVoucher
+    @VoucherId INT
+AS
+BEGIN
+    -- First delete the related entries
+    DELETE FROM VoucherEntries WHERE VoucherId = @VoucherId;
+
+    -- Then delete the voucher itself
+    DELETE FROM Vouchers WHERE VoucherId = @VoucherId;
+END
+GO
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,85 @@
+﻿@page
+@model MiniAccountManagementSystem.Pages.Admin.VoucherModel
+@{
+    ViewData["Title"] = "Voucher Entry";
+}
+
+<h2>Voucher Entry</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label>Voucher Type</label>
+        <select asp-for="VoucherType" class="form-control">
+            <option value="Journal">Journal</option>
+            <option value="Payment">Payment</option>
+            <option value="Receipt">Receipt</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Voucher Date</label>
+        <input asp-for="VoucherDate" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Reference No</label>
+        <input asp-for="ReferenceNo" class="form-control" />
+    </div>
+    <h4>Voucher Entries</h4>
+    <table class="table" id="entryTable">
+        <thead>
+            <tr>
+                <th>Account</th>
+                <th>Debit</th>
+                <th>Credit</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select name="Entries[0].AccountId" class="form-control">
+                        @foreach (var acc in Model.Accounts)
+                        {
+                            <option value="@acc.AccountId">@acc.AccountName</option>
+                        }
+                    </select>
+                </td>
+                <td><input name="Entries[0].DebitAmount" class="form-control" /></td>
+                <td><input name="Entries[0].CreditAmount" class="form-control" /></td>
+                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-sm btn-info" onclick="addRow()">Add Entry</button>
+    <button type="submit" class="btn btn-success">Save Voucher</button>
+</form>
+
+@section Scripts {
+    <script>
+        let rowIndex = 1;
+        function addRow() {
+            const row = `<tr>
+                <td>
+                    <select name="Entries[${rowIndex}].AccountId" class="form-control">
+                        @foreach (var acc in Model.Accounts)
+                        {
+                            <option value="@acc.AccountId">@acc.AccountName</option>
+                        }
+                    </select>
+                </td>
+                <td><input name="Entries[${rowIndex}].DebitAmount" class="form-control" /></td>
+                <td><input name="Entries[${rowIndex}].CreditAmount" class="form-control" /></td>
+                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button></td>
+            </tr>`;
+            $('#entryTable tbody').append(row);
+            rowIndex++;
+        }
+
+        function removeRow(btn) {
+            $(btn).closest('tr').remove();
+        }
+    </script>
+}
+

@@ -1,0 +1,37 @@
+﻿@page "{id:int}"
+@model MiniAccountManagementSystem.Pages.Admin.VoucharDetailsModel
+@{
+    ViewData["Title"] = "Voucher Details";
+}
+
+<h2>Voucher Details</h2>
+
+<div>
+    <strong>Voucher Type:</strong> @Model.Voucher.VoucherType <br />
+    <strong>Voucher Date:</strong> @Model.Voucher.VoucherDate.ToString("yyyy-MM-dd") <br />
+    <strong>Reference No:</strong> @Model.Voucher.ReferenceNo <br />
+</div>
+
+<h4>Voucher Entries</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Account Name</th>
+            <th>Debit Amount</th>
+            <th>Credit Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entry in Model.Entries)
+        {
+            <tr>
+                <td>@entry.AccountName</td>
+                <td>@entry.DebitAmount</td>
+                <td>@entry.CreditAmount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-page="/Admin/VoucharList" class="btn btn-secondary">Back to List</a>
+

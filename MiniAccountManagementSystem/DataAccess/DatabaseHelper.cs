@@ -48,5 +48,29 @@ namespace MiniAccountManagementSystem.DataAccess
             connection.Open();
             command.ExecuteNonQuery();
         }
+        public List<ChartOfAccountDto> GetChartOfAccounts()
+        {
+            var list = new List<ChartOfAccountDto>();
+
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand("SELECT AccountId, AccountName FROM ChartOfAccounts", conn))
+            {
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new ChartOfAccountDto
+                        {
+                            AccountId = reader.GetInt32(0),
+                            AccountName = reader.GetString(1)
+                        });
+                    }
+                }
+            }
+
+            return list;
+        }
+
     }
 }
