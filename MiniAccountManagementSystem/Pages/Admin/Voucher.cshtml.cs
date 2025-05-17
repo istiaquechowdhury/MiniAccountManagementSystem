@@ -25,7 +25,9 @@ namespace MiniAccountManagementSystem.Pages.Admin
         public string ReferenceNo { get; set; }
 
 
-      
+
+
+
 
 
         [BindProperty]
@@ -38,6 +40,11 @@ namespace MiniAccountManagementSystem.Pages.Admin
             // Simulate loading from database
             Accounts = _dbHelper.GetChartOfAccounts(); // You need to implement this method
         }
+
+
+
+
+
         public IActionResult OnPost()
         {
             // Build DataTable for VoucherEntryType
@@ -68,10 +75,10 @@ namespace MiniAccountManagementSystem.Pages.Admin
             _dbHelper.ExecuteNonQuery("sp_SaveVoucher", parameters);
 
             TempData["Success"] = "Voucher saved successfully!";
-            return RedirectToPage();
+            return RedirectToPage("/Admin/VoucharList");
         }
 
-      
+
 
 
 

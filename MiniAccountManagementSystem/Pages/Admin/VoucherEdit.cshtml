@@ -1,0 +1,88 @@
+﻿@page "{VoucherId:int}"
+@model MiniAccountManagementSystem.Pages.Admin.VoucherEditModel
+@{
+    ViewData["Title"] = "Edit Voucher";
+}
+
+<h2>Edit Voucher #@Model.VoucherId</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="VoucherId" />
+
+    <div class="form-group">
+        <label>Voucher Type</label>
+        <select asp-for="VoucherType" class="form-control">
+            <option value="Journal">Journal</option>
+            <option value="Payment">Payment</option>
+            <option value="Receipt">Receipt</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Voucher Date</label>
+        <input asp-for="VoucherDate" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Reference No</label>
+        <input asp-for="ReferenceNo" class="form-control" />
+    </div>
+
+    <h4>Entries</h4>
+    <table class="table" id="entryTable">
+        <thead><tr>
+            <th>Account</th><th>Debit</th><th>Credit</th><th></th>
+        </tr></thead>
+        <tbody>
+            @for (int i = 0; i < Model.Entries.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <select name="Entries[@i].AccountId" class="form-control">
+                            @foreach (var acc in Model.Accounts)
+                            {
+                                // determine if this option should be selected
+                                bool isSelected = acc.AccountId == Model.Entries[i].AccountId;
+                                <option value="@acc.AccountId" selected="@(isSelected ? "selected" : null)">
+                                    @acc.AccountName
+                                </option>
+                            }
+                        </select>
+                    </td>
+                    <td><input name="Entries[@i].DebitAmount" value="@Model.Entries[i].DebitAmount" class="form-control" /></td>
+                    <td><input name="Entries[@i].CreditAmount" value="@Model.Entries[i].CreditAmount" class="form-control" /></td>
+                    <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-sm btn-info" onclick="addRow()">Add Entry</button>
+    <button type="submit" class="btn btn-success">Update Voucher</button>
+</form>
+
+@section Scripts {
+<script>
+    let idx = @Model.Entries.Count;
+    function addRow() {
+        const row = `<tr>
+            <td>
+              <select name="Entries[${idx}].AccountId" class="form-control">
+                @foreach(var acc in Model.Accounts) {
+                  <text><option value="@acc.AccountId">@acc.AccountName</option></text>
+                }
+              </select>
+            </td>
+            <td><input name="Entries[${idx}].DebitAmount" class="form-control" /></td>
+            <td><input name="Entries[${idx}].CreditAmount" class="form-control" /></td>
+            <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button></td>
+        </tr>`;
+        $('#entryTable tbody').append(row);
+        idx++;
+    }
+    function removeRow(btn) {
+        $(btn).closest('tr').remove();
+    }
+</script>
+}
+

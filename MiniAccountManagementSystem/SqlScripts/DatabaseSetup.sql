@@ -6,7 +6,7 @@ CREATE TABLE Users (
     IsActive BIT NOT NULL DEFAULT 1,
     CreatedAt DATETIME NOT NULL DEFAULT GETDATE()
 );
-Go
+Go 
 
 
 /****** Create Roles Table ******/
@@ -346,7 +346,7 @@ CREATE PROCEDURE sp_GetVoucherEntriesByVoucherId
     @VoucherId INT
 AS
 BEGIN
-    SELECT ve.DebitAmount, ve.CreditAmount, c.AccountName
+    SELECT  ve.AccountId, ve.DebitAmount, ve.CreditAmount, c.AccountName
     FROM VoucherEntries ve
     INNER JOIN ChartOfAccounts c ON ve.AccountId = c.AccountId
     WHERE ve.VoucherId = @VoucherId
@@ -366,6 +366,52 @@ BEGIN
     DELETE FROM Vouchers WHERE VoucherId = @VoucherId;
 END
 GO
+
+/****** Stored Procedure: sp_UpdateVoucher ******/
+
+CREATE PROCEDURE sp_UpdateVoucher
+    @VoucherId INT,
+    @VoucherDate DATE,
+    @ReferenceNo NVARCHAR(50),
+    @VoucherType NVARCHAR(20),
+    @Entries dbo.VoucherEntryType READONLY
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- 1) Validate debit = credit
+    DECLARE @TotalDebit DECIMAL(18,2), @TotalCredit DECIMAL(18,2);
+    SELECT 
+        @TotalDebit  = SUM(DebitAmount),
+        @TotalCredit = SUM(CreditAmount)
+    FROM @Entries;
+
+    IF @TotalDebit <> @TotalCredit
+    BEGIN
+        RAISERROR('Total Debit and Credit must be equal.',16,1);
+        RETURN;
+    END
+
+    -- 2) Update header
+    UPDATE Vouchers
+    SET 
+        VoucherDate  = @VoucherDate,
+        ReferenceNo  = @ReferenceNo,
+        VoucherType  = @VoucherType
+    WHERE VoucherId = @VoucherId;
+
+    -- 3) Delete old lines
+    DELETE FROM VoucherEntries
+    WHERE VoucherId = @VoucherId;
+
+    -- 4) Insert new lines
+    INSERT INTO VoucherEntries (VoucherId, AccountId, DebitAmount, CreditAmount)
+    SELECT 
+        @VoucherId, AccountId, DebitAmount, CreditAmount
+    FROM @Entries;
+END
+GO
+
 
 
 

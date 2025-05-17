@@ -22,12 +22,18 @@
                 <td>@v.ReferenceNo</td>
                 <td>
                     <a asp-page="/Admin/VoucharDetails" asp-route-id="@v.VoucherId" class="btn btn-sm btn-info">View</a>
-                </td>
-                <td>
                     <form method="post" asp-page-handler="Delete" asp-route-id="@v.VoucherId" onsubmit="return confirm('Are you sure you want to delete this voucher?');">
                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
+                    <a asp-page="/Admin/VoucherEdit"
+                       asp-route-voucherId="@v.VoucherId"
+                       class="btn btn-sm btn-primary">
+                        Edit
+                    </a>
                 </td>
+                
+               
+
                
 
             </tr>
