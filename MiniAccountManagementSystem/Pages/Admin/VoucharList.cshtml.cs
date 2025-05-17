@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
@@ -6,6 +7,7 @@ using System.Data;
 
 namespace MiniAccountManagementSystem.Pages.Admin
 {
+    [Authorize(Roles = "Accountant")]
     public class VoucharListModel : PageModel
     {
         private readonly DatabaseHelper _dbHelper;

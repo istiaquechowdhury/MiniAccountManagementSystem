@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,6 +8,7 @@ using System.Data;
 
 namespace MiniAccountManagementSystem.Pages.Admin
 {
+    [Authorize(Roles = "Accountant")]
     public class ChartOfAccountsModel : PageModel
     {
         private readonly DatabaseHelper _db;

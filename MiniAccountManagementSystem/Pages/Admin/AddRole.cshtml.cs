@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
@@ -5,6 +6,7 @@ using MiniAccountManagementSystem.DataAccess;
 
 namespace MiniAccountManagementSystem.Pages.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class AddRoleModel : PageModel
     {
         private readonly DatabaseHelper _db;
