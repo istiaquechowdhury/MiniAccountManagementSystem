@@ -7,7 +7,8 @@ using System.Data;
 
 namespace MiniAccountManagementSystem.Pages.Admin
 {
-    [Authorize(Roles = "Accountant")]
+    [Authorize(Roles = "Accountant,Viewer")]
+    
     public class VoucharListModel : PageModel
     {
         private readonly DatabaseHelper _dbHelper;
