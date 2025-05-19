@@ -4,12 +4,18 @@
 }
 <h2>Assign Module Access to Role</h2>
 
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
 <form method="post">
     <div class="form-group">
         <label for="RoleId">Select Role</label>
-        <select asp-for="RoleId" class="form-control" asp-items="Model.Roles">
+        <select asp-for="model.RoleId" class="form-control" asp-items="Model.Roles">
             <option value="">-- Select Role --</option>
         </select>
+        <span asp-validation-for="model.RoleId"class="bg-danger"></span>
     </div>
 
     <div class="form-group">
@@ -17,16 +23,22 @@
         <select asp-for="ModuleId" class="form-control" asp-items="Model.Modules">
             <option value="">-- Select Module --</option>
         </select>
+        <span asp-validation-for="ModuleId" class="bg-danger"></span>
+
     </div>
 
     <div class="form-check">
         <input class="form-check-input" asp-for="CanView" />
         <label class="form-check-label" for="CanView">Can View</label>
+        <span asp-validation-for="CanView" class="bg-danger"></span>
+
     </div>
 
     <div class="form-check">
         <input class="form-check-input" asp-for="CanEdit" />
         <label class="form-check-label" for="CanEdit">Can Edit</label>
+        <span asp-validation-for="CanEdit" class="bg-danger"></span>
+
     </div>
 
     <button type="submit" class="btn btn-primary mt-3">Assign Access</button>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using MiniAccountManagementSystem.DataAccess;
+using MiniAccountManagementSystem.Models.ModelDtos;
 using System.Data;
 
 namespace MiniAccountManagementSystem.Pages.Admin
@@ -19,19 +20,23 @@ namespace MiniAccountManagementSystem.Pages.Admin
         }
 
         [BindProperty]
-        public int RoleId { get; set; }
+       
+        public AssignAccessModelDTO model { get; set; }
 
         [BindProperty]
-        public int ModuleId { get; set; }  
 
+        public int ModuleId { get; set; }
         [BindProperty]
+
         public bool CanView { get; set; }
-
         [BindProperty]
-        public bool CanEdit { get; set; }
 
+        public bool CanEdit { get; set; }
+       
         public List<SelectListItem> Roles { get; set; }
-        public List<SelectListItem> Modules { get; set; }  
+       
+        public List<SelectListItem> Modules { get; set; }
+
 
         public void OnGet()
         {
@@ -50,7 +55,7 @@ namespace MiniAccountManagementSystem.Pages.Admin
 
             var sqlParams = new[]
             {
-                new SqlParameter("@RoleId", RoleId),
+                new SqlParameter("@RoleId", model.RoleId),
                 new SqlParameter("@ModuleId", ModuleId),  
                 new SqlParameter("@CanView", CanView),
                 new SqlParameter("@CanEdit", CanEdit)

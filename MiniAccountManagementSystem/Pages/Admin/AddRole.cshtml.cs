@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using MiniAccountManagementSystem.DataAccess;
+using MiniAccountManagementSystem.Models.ModelDtos;
 
 namespace MiniAccountManagementSystem.Pages.Admin
 {
@@ -17,7 +18,8 @@ namespace MiniAccountManagementSystem.Pages.Admin
         }
 
         [BindProperty]
-        public string RoleName { get; set; }
+        
+        public AddRoleModelDTO model { get; set; }    
 
         public void OnGet()
         {
@@ -25,13 +27,13 @@ namespace MiniAccountManagementSystem.Pages.Admin
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid || string.IsNullOrWhiteSpace(RoleName))
+            if (!ModelState.IsValid || string.IsNullOrWhiteSpace(model.RoleName))
                 return Page();
 
             var parameters = new[]
             {
-            new SqlParameter("@RoleName", RoleName)
-        };
+            new SqlParameter("@RoleName", model.RoleName)
+            };
 
             _db.ExecuteNonQuery("AddRole", parameters);
 

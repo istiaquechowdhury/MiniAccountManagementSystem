@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using MiniAccountManagementSystem.DataAccess;
+using MiniAccountManagementSystem.Models.ModelDtos;
 
 namespace MiniAccountManagementSystem.Pages.Admin
 {
@@ -16,11 +17,9 @@ namespace MiniAccountManagementSystem.Pages.Admin
             _db = db;
         }
 
-        [BindProperty]
-        public string Username { get; set; }
 
         [BindProperty]
-        public string Password { get; set; }
+        public AddUserModelDTO model { get; set; }  
 
         public void OnGet()
         {
@@ -28,13 +27,13 @@ namespace MiniAccountManagementSystem.Pages.Admin
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid || string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
+            if (!ModelState.IsValid || string.IsNullOrWhiteSpace(model.UserName) || string.IsNullOrWhiteSpace(model.Password))
                 return Page();
 
             var parameters = new[]
             {
-            new SqlParameter("@Username", Username),
-            new SqlParameter("@PasswordHash", Password) 
+            new SqlParameter("@Username", model.UserName),
+            new SqlParameter("@PasswordHash", model.Password) 
         };
 
             _db.ExecuteNonQuery("AddUser", parameters);
