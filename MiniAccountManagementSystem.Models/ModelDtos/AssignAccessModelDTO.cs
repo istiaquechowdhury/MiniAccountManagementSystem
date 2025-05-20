@@ -16,11 +16,7 @@ namespace MiniAccountManagementSystem.Models.ModelDtos
         public bool CanView { get; set; }  
 
         public bool CanEdit { get; set; }
-        [ValidateNever]
-        public List<SelectListItem>? Roles { get; set; }
-        [ValidateNever]
-        public List<SelectListItem>? Modules { get; set; }
-
+       
 
     }
 }

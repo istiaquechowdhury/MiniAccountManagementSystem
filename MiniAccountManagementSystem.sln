@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniAccountManagementSystem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniAccountManagementSystem.Models", "MiniAccountManagementSystem.Models\MiniAccountManagementSystem.Models.csproj", "{443F04EA-6DA7-41D3-B447-CA31E4A1BF61}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniAccountManagementSystem.DataAccess", "MiniAccountManagementSystem.DataAccess\MiniAccountManagementSystem.DataAccess.csproj", "{1766E2CB-76D9-43A5-9072-599D2BAACD89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{443F04EA-6DA7-41D3-B447-CA31E4A1BF61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{443F04EA-6DA7-41D3-B447-CA31E4A1BF61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{443F04EA-6DA7-41D3-B447-CA31E4A1BF61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1766E2CB-76D9-43A5-9072-599D2BAACD89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1766E2CB-76D9-43A5-9072-599D2BAACD89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1766E2CB-76D9-43A5-9072-599D2BAACD89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1766E2CB-76D9-43A5-9072-599D2BAACD89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using MiniAccountManagementSystem.DataAccess;
+using MiniAccountManagementSystem.Models.ModelDtos;
 using System.Data;
 
 namespace MiniAccountManagementSystem.Pages.Admin
@@ -18,17 +19,18 @@ namespace MiniAccountManagementSystem.Pages.Admin
             _dbHelper = dbHelper;
         }
 
-        public List<VoucherListDto> Vouchers { get; set; }
+      
+        public List<VoucharListModeDTO> Vouchers { get; set; }
 
         public void OnGet()
         {
-            Vouchers = new List<VoucherListDto>();
+            Vouchers = new List<VoucharListModeDTO>();
 
             var table = _dbHelper.ExecuteStoredProcedure("sp_GetVoucherList");
 
             foreach (DataRow row in table.Rows)
             {
-                Vouchers.Add(new VoucherListDto
+                Vouchers.Add(new VoucharListModeDTO
                 {
                     VoucherId = Convert.ToInt32(row["VoucherId"]),
                     VoucherDate = Convert.ToDateTime(row["VoucherDate"]),
@@ -45,12 +47,6 @@ namespace MiniAccountManagementSystem.Pages.Admin
             TempData["Success"] = "Voucher deleted successfully!";
             return RedirectToPage(); // refresh list
         }
-        public class VoucherListDto
-        {
-            public int VoucherId { get; set; }
-            public DateTime VoucherDate { get; set; }
-            public string ReferenceNo { get; set; }
-            public string VoucherType { get; set; }
-        }
+        
     }
 }

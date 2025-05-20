@@ -12,21 +12,21 @@
 
 <form method="post" asp-page-handler="Insert">
     <div class="form-group">
-        <label asp-for="AccountName">Account Name</label>
-        <input asp-for="AccountName" class="form-control" />
-        <span asp-validation-for="AccountName" class="bg-danger"></span>
+        <label asp-for="model.AccountName">Account Name</label>
+        <input asp-for="model.AccountName" class="form-control" />
+        <span asp-validation-for="model.AccountName" class="bg-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="AccountCode">Account Code</label>
-        <input asp-for="AccountCode" class="form-control" />
-        <span asp-validation-for="AccountCode" class="bg-danger"></span>
+        <label asp-for="model.AccountCode">Account Code</label>
+        <input asp-for="model.AccountCode" class="form-control" />
+        <span asp-validation-for="model.AccountCode" class="bg-danger"></span>
 
     </div>
 
     <div class="form-group">
-        <label asp-for="ParentAccountId">Parent Account</label>
-        <select asp-for="ParentAccountId" asp-items="Model.ParentAccounts" class="form-control">
+        <label asp-for="model.ParentAccountId">Parent Account</label>
+        <select asp-for="model.ParentAccountId" asp-items="Model.ParentAccounts" class="form-control">
             <option value="">-- None --</option>
         </select>
     </div>

@@ -20,24 +20,24 @@
 
     <div class="form-group">
         <label for="ModuleId">Module</label>
-        <select asp-for="ModuleId" class="form-control" asp-items="Model.Modules">
+        <select asp-for="model.ModuleId" class="form-control" asp-items="Model.Modules">
             <option value="">-- Select Module --</option>
         </select>
-        <span asp-validation-for="ModuleId" class="bg-danger"></span>
+        <span asp-validation-for="model.ModuleId" class="bg-danger"></span>
 
     </div>
 
     <div class="form-check">
-        <input class="form-check-input" asp-for="CanView" />
+        <input class="form-check-input" asp-for="model.CanView" />
         <label class="form-check-label" for="CanView">Can View</label>
-        <span asp-validation-for="CanView" class="bg-danger"></span>
+        <span asp-validation-for="model.CanView" class="bg-danger"></span>
 
     </div>
 
     <div class="form-check">
-        <input class="form-check-input" asp-for="CanEdit" />
+        <input class="form-check-input" asp-for="model.CanEdit" />
         <label class="form-check-label" for="CanEdit">Can Edit</label>
-        <span asp-validation-for="CanEdit" class="bg-danger"></span>
+        <span asp-validation-for="model.CanEdit" class="bg-danger"></span>
 
     </div>
 

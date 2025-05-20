@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using MiniAccountManagementSystem.DataAccess;
+using MiniAccountManagementSystem.Models.ModelDtos;
 using System.Data;
 
 namespace MiniAccountManagementSystem.Pages.Admin
@@ -20,8 +21,11 @@ namespace MiniAccountManagementSystem.Pages.Admin
         [BindProperty(SupportsGet = true)]
         public int Id { get; set; }
 
-        public VoucherDetailDto Voucher { get; set; }
-        public List<VoucherEntryDto> Entries { get; set; }
+        [BindProperty(SupportsGet = true)]  
+        public VoucharDetailsModelDTO modelDTO { get; set; }    
+
+        public VoucharDetailsModelDTO Voucher { get; set; }
+        public List<VoucharDetailsModelDTO> Entries { get; set; }
 
         public IActionResult OnGet()
         {
@@ -37,7 +41,7 @@ namespace MiniAccountManagementSystem.Pages.Admin
             }
 
             var row = voucherTable.Rows[0];
-            Voucher = new VoucherDetailDto
+            Voucher = new VoucharDetailsModelDTO()
             {
                 VoucherId = Id,
                 VoucherDate = Convert.ToDateTime(row["VoucherDate"]),
@@ -46,7 +50,7 @@ namespace MiniAccountManagementSystem.Pages.Admin
             };
 
             // Get voucher entries
-            Entries = new List<VoucherEntryDto>();
+            Entries = new List<VoucharDetailsModelDTO>();
                 var entryTable = _dbHelper.ExecuteStoredProcedure(
                         "sp_GetVoucherEntriesByVoucherId",
                         new[] { new SqlParameter("@VoucherId", Id) }
@@ -54,7 +58,7 @@ namespace MiniAccountManagementSystem.Pages.Admin
 
             foreach (DataRow entryRow in entryTable.Rows)
             {
-                Entries.Add(new VoucherEntryDto
+                Entries.Add(new VoucharDetailsModelDTO
                 {
                     AccountName = entryRow["AccountName"].ToString(),
                     DebitAmount = Convert.ToDecimal(entryRow["DebitAmount"]),
@@ -65,18 +69,7 @@ namespace MiniAccountManagementSystem.Pages.Admin
             return Page();
         }
     }
-    public class VoucherDetailDto
-    {
-        public int VoucherId { get; set; }
-        public DateTime VoucherDate { get; set; }
-        public string VoucherType { get; set; }
-        public string ReferenceNo { get; set; }
-    }
+   
 
-    public class VoucherEntryDto
-    {
-        public string AccountName { get; set; }
-        public decimal DebitAmount { get; set; }
-        public decimal CreditAmount { get; set; }
-    }
+    
 }

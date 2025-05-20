@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using MiniAccountManagementSystem.DataAccess;
+using MiniAccountManagementSystem.Models.ModelDtos;
 using System.Data;
 
 namespace MiniAccountManagementSystem.Pages.Admin
@@ -19,16 +20,7 @@ namespace MiniAccountManagementSystem.Pages.Admin
         }
 
         [BindProperty]
-        public int? AccountId { get; set; }
-
-        [BindProperty]
-        public string AccountName { get; set; }
-
-        [BindProperty]
-        public string AccountCode { get; set; }
-
-        [BindProperty]
-        public int? ParentAccountId { get; set; }
+        public ChartOfAccountsModelDTO model { get; set; }   
 
         public List<SelectListItem> ParentAccounts { get; set; }
 
@@ -52,9 +44,9 @@ namespace MiniAccountManagementSystem.Pages.Admin
             var sqlParams = new[]
             {
                 new SqlParameter("@Mode", "Insert"),
-                new SqlParameter("@AccountName", AccountName),
-                new SqlParameter("@ParentAccountId", (object?)ParentAccountId ?? DBNull.Value),
-                new SqlParameter("@AccountCode", AccountCode)
+                new SqlParameter("@AccountName", model.AccountName),
+                new SqlParameter("@ParentAccountId", (object?)model.ParentAccountId ?? DBNull.Value),
+                new SqlParameter("@AccountCode", model.AccountCode)
             };
 
             _db.ExecuteStoredProcedure("sp_ManageChartOfAccounts", sqlParams);
@@ -65,7 +57,7 @@ namespace MiniAccountManagementSystem.Pages.Admin
 
         public IActionResult OnPostUpdate()
         {
-            if (!ModelState.IsValid || AccountId == null)
+            if (!ModelState.IsValid || model.AccountId == null)
             {
                 LoadParentAccounts();
                 LoadAccounts();
@@ -75,10 +67,10 @@ namespace MiniAccountManagementSystem.Pages.Admin
             var sqlParams = new[]
             {
                 new SqlParameter("@Mode", "Update"),
-                new SqlParameter("@AccountId", AccountId),
-                new SqlParameter("@AccountName", AccountName),
-                new SqlParameter("@ParentAccountId", (object?)ParentAccountId ?? DBNull.Value),
-                new SqlParameter("@AccountCode", AccountCode)
+                new SqlParameter("@AccountId", model.AccountId),
+                new SqlParameter("@AccountName", model.AccountName),
+                new SqlParameter("@ParentAccountId", (object?)model.ParentAccountId ?? DBNull.Value),
+                new SqlParameter("@AccountCode", model.AccountCode)
             };
 
             _db.ExecuteStoredProcedure("sp_ManageChartOfAccounts", sqlParams);

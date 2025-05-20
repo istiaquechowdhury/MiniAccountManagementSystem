@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using MiniAccountManagementSystem.DataAccess;
+using MiniAccountManagementSystem.Models.ModelDtos;
 using System.Data;
 
 namespace MiniAccountManagementSystem.Pages.Admin
@@ -17,25 +18,19 @@ namespace MiniAccountManagementSystem.Pages.Admin
             _dbHelper = dbHelper;
         }
 
-        [BindProperty]
-        public string VoucherType { get; set; }
+    
 
         [BindProperty]
-        public DateTime VoucherDate { get; set; }
-
-        [BindProperty]
-        public string ReferenceNo { get; set; }
-
-
+        public VoucharCreateModelDTO model { get; set; }        
 
 
 
 
 
         [BindProperty]
-        public List<VoucherEntryInput> Entries { get; set; }
+        public List<VoucharEntryInputModelDTO> Entries { get; set; }
 
-        public List<ChartOfAccountDto> Accounts { get; set; }
+        public List<ChartOfAccountsModelDTO> Accounts { get; set; }
 
         public void OnGet()
         {
@@ -49,6 +44,8 @@ namespace MiniAccountManagementSystem.Pages.Admin
 
         public IActionResult OnPost()
         {
+           
+
             // Build DataTable for VoucherEntryType
             var table = new DataTable();
             table.Columns.Add("AccountId", typeof(int));
@@ -63,9 +60,9 @@ namespace MiniAccountManagementSystem.Pages.Admin
             // Build SqlParameter array
             var parameters = new SqlParameter[]
             {
-                new SqlParameter("@VoucherDate", SqlDbType.DateTime) { Value = VoucherDate },
-                new SqlParameter("@ReferenceNo", SqlDbType.NVarChar, 100) { Value = ReferenceNo ?? "" },
-                new SqlParameter("@VoucherType", SqlDbType.NVarChar, 50) { Value = VoucherType },
+                new SqlParameter("@VoucherDate", SqlDbType.DateTime) { Value = model.VoucherDate },
+                new SqlParameter("@ReferenceNo", SqlDbType.NVarChar, 100) { Value = model.ReferenceNo ?? "" },
+                new SqlParameter("@VoucherType", SqlDbType.NVarChar, 50) { Value = model.VoucherType },
                 new SqlParameter("@Entries", SqlDbType.Structured)
                 {
                     TypeName = "dbo.VoucherEntryType",
@@ -87,15 +84,6 @@ namespace MiniAccountManagementSystem.Pages.Admin
 
     }
 }
-public class VoucherEntryInput
-{
-    public int AccountId { get; set; }
-    public decimal DebitAmount { get; set; }
-    public decimal CreditAmount { get; set; }
-}
 
-public class ChartOfAccountDto
-{
-    public int AccountId { get; set; }
-    public string AccountName { get; set; }
-}
+
+

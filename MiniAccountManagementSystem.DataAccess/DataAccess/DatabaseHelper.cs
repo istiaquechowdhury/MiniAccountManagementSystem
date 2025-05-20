@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using MiniAccountManagementSystem.Models.ModelDtos;
 using System.Data;
 
 
@@ -49,9 +50,9 @@ namespace MiniAccountManagementSystem.DataAccess
             connection.Open();
             command.ExecuteNonQuery();
         }
-        public List<ChartOfAccountDto> GetChartOfAccounts()
+        public List<ChartOfAccountsModelDTO> GetChartOfAccounts()
         {
-            var list = new List<ChartOfAccountDto>();
+            var list = new List<ChartOfAccountsModelDTO>();
 
             using (var conn = new SqlConnection(_connectionString))
             using (var cmd = new SqlCommand("SELECT AccountId, AccountName FROM ChartOfAccounts", conn))
@@ -61,7 +62,7 @@ namespace MiniAccountManagementSystem.DataAccess
                 {
                     while (reader.Read())
                     {
-                        list.Add(new ChartOfAccountDto
+                        list.Add(new ChartOfAccountsModelDTO
                         {
                             AccountId = reader.GetInt32(0),
                             AccountName = reader.GetString(1)

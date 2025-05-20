@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using MiniAccountManagementSystem.DataAccess;
+using MiniAccountManagementSystem.Models.ModelDtos;
 using System.Data;
 
 namespace MiniAccountManagementSystem.Pages.Admin
@@ -19,10 +20,7 @@ namespace MiniAccountManagementSystem.Pages.Admin
         }
 
         [BindProperty]
-        public int SelectedUserId { get; set; }
-
-        [BindProperty]
-        public int SelectedRoleId { get; set; }
+        public AssignUserRoleModelDTO model { get; set; }   
 
         public List<SelectListItem> Users { get; set; }
         public List<SelectListItem> Roles { get; set; }
@@ -42,8 +40,8 @@ namespace MiniAccountManagementSystem.Pages.Admin
 
             SqlParameter[] parameters = new SqlParameter[]
             {
-                new SqlParameter("@UserId", SelectedUserId),
-                new SqlParameter("@RoleId", SelectedRoleId)
+                new SqlParameter("@UserId", model.SelectedUserId),
+                new SqlParameter("@RoleId", model.SelectedRoleId)
             };
 
             _db.ExecuteNonQuery("AssignRoleToUser", parameters);

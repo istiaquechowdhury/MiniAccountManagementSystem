@@ -6,24 +6,29 @@
 
 <h2>Voucher Entry</h2>
 
-<form method="post">
+<form method="post" onsubmit="return checkDebitCreditEqual()">
     <div class="form-group">
         <label>Voucher Type</label>
-        <select asp-for="VoucherType" class="form-control">
+        <select asp-for="model.VoucherType" class="form-control">
             <option value="Journal">Journal</option>
             <option value="Payment">Payment</option>
             <option value="Receipt">Receipt</option>
         </select>
+        <span asp-validation-for="model.VoucherType"class="bg-danger"></span>
     </div>
 
     <div class="form-group">
         <label>Voucher Date</label>
-        <input asp-for="VoucherDate" type="date" class="form-control" />
+        <input asp-for="model.VoucherDate" type="date" class="form-control" />
+        <span asp-validation-for="model.VoucherDate" class="bg-danger"></span>
+
     </div>
 
     <div class="form-group">
         <label>Reference No</label>
-        <input asp-for="ReferenceNo" class="form-control" />
+        <input asp-for="model.ReferenceNo" class="form-control" />
+        <span asp-validation-for="model.ReferenceNo" class="bg-danger"></span>
+
     </div>
     <h4>Voucher Entries</h4>
     <table class="table" id="entryTable">
@@ -53,6 +58,9 @@
     </table>
 
     <button type="button" class="btn btn-sm btn-info" onclick="addRow()">Add Entry</button>
+    <div id="voucherValidationMessage" class="text-danger font-weight-bold mb-2" style="display:none;">
+        Debit and Credit must be equal.
+    </div>
     <button type="submit" class="btn btn-success">Save Voucher</button> 
     
 </form>
@@ -80,6 +88,27 @@
 
         function removeRow(btn) {
             $(btn).closest('tr').remove();
+        }
+
+        function checkDebitCreditEqual() {
+            let totalDebit = 0;
+            let totalCredit = 0;
+
+            $('#entryTable tbody tr').each(function () {
+                const debit = parseFloat($(this).find('input[name$=".DebitAmount"]').val()) || 0;
+                const credit = parseFloat($(this).find('input[name$=".CreditAmount"]').val()) || 0;
+
+                totalDebit += debit;
+                totalCredit += credit;
+            });
+
+            if (totalDebit !== totalCredit) {
+                $('#voucherValidationMessage').show(); // show message
+                return false; // prevent form submission
+            }
+
+            $('#voucherValidationMessage').hide(); // hide message if valid
+            return true; // allow form submission
         }
     </script>
 }

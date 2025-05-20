@@ -113,8 +113,6 @@ CREATE TYPE VoucherEntryType AS TABLE
 );
 GO
 
-
-
 /****** Stored Procedure: Add a New Role ******/
 CREATE PROCEDURE AddRole
     @RoleName NVARCHAR(100)

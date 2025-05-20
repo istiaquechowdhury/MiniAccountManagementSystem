@@ -18,20 +18,8 @@ namespace MiniAccountManagementSystem.Pages.Admin
         {
             _db = db;
         }
-
-        [BindProperty]
-       
-        public AssignAccessModelDTO model { get; set; }
-
-        [BindProperty]
-
-        public int ModuleId { get; set; }
-        [BindProperty]
-
-        public bool CanView { get; set; }
-        [BindProperty]
-
-        public bool CanEdit { get; set; }
+        [BindProperty]  
+        public AssignAccessModelDTO model { get; set; } 
        
         public List<SelectListItem> Roles { get; set; }
        
@@ -56,9 +44,9 @@ namespace MiniAccountManagementSystem.Pages.Admin
             var sqlParams = new[]
             {
                 new SqlParameter("@RoleId", model.RoleId),
-                new SqlParameter("@ModuleId", ModuleId),  
-                new SqlParameter("@CanView", CanView),
-                new SqlParameter("@CanEdit", CanEdit)
+                new SqlParameter("@ModuleId", model.ModuleId),  
+                new SqlParameter("@CanView", model.CanView),
+                new SqlParameter("@CanEdit", model.CanEdit)
             };
 
             _db.ExecuteStoredProcedure("AssignModuleAccessToRole", sqlParams); 

@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MiniAccountManagementSystem.DataAccess\MiniAccountManagementSystem.DataAccess.csproj" />
     <ProjectReference Include="..\MiniAccountManagementSystem.Models\MiniAccountManagementSystem.Models.csproj" />
   </ItemGroup>
 

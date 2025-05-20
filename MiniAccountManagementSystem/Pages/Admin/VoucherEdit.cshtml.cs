@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using MiniAccountManagementSystem.DataAccess;
+using MiniAccountManagementSystem.Models.ModelDtos;
 using System.Data;
 
 namespace MiniAccountManagementSystem.Pages.Admin
@@ -16,19 +17,24 @@ namespace MiniAccountManagementSystem.Pages.Admin
         [BindProperty(SupportsGet = true)]
         public int VoucherId { get; set; }
 
-        [BindProperty]
-        public string VoucherType { get; set; }
+        //[BindProperty]
+        //public string VoucherType { get; set; }
+
+        //[BindProperty]
+        //public DateTime VoucherDate { get; set; }
+
+        //[BindProperty]
+        //public string ReferenceNo { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public VoucharEditModelDTO model { get; set; }
+
 
         [BindProperty]
-        public DateTime VoucherDate { get; set; }
+        public List<VoucharEntryInputModelDTO> Entries { get; set; }
 
-        [BindProperty]
-        public string ReferenceNo { get; set; }
-
-        [BindProperty]
-        public List<VoucherEntryInput> Entries { get; set; }
-
-        public List<ChartOfAccountDto> Accounts { get; set; }
+        
+        public List<ChartOfAccountsModelDTO> Accounts { get; set; }
 
         public void OnGet()
         {
@@ -40,14 +46,14 @@ namespace MiniAccountManagementSystem.Pages.Admin
                 new[] { new SqlParameter("@VoucherId", VoucherId) });
             if (vt.Rows.Count == 0) RedirectToPage("/Admin/VoucherList");
             var row = vt.Rows[0];
-            VoucherDate = (DateTime)row["VoucherDate"];
-            ReferenceNo = row["ReferenceNo"].ToString();
-            VoucherType = row["VoucherType"].ToString();
+            model.VoucherDate = (DateTime)row["VoucherDate"];
+            model.ReferenceNo = row["ReferenceNo"].ToString();
+            model.VoucherType = row["VoucherType"].ToString();
 
             // Load existing entries
             var et = _db.ExecuteStoredProcedure("sp_GetVoucherEntriesByVoucherId",
                 new[] { new SqlParameter("@VoucherId", VoucherId) });
-            Entries = et.Rows.Cast<DataRow>().Select(r => new VoucherEntryInput
+            Entries = et.Rows.Cast<DataRow>().Select(r => new VoucharEntryInputModelDTO
             {
                 AccountId = (int)r["AccountId"],
                 DebitAmount = (decimal)r["DebitAmount"],
@@ -69,9 +75,9 @@ namespace MiniAccountManagementSystem.Pages.Admin
             var ps = new[]
             {
                 new SqlParameter("@VoucherId", VoucherId),
-                new SqlParameter("@VoucherDate", VoucherDate),
-                new SqlParameter("@ReferenceNo", ReferenceNo ?? ""),
-                new SqlParameter("@VoucherType", VoucherType ?? ""),
+                new SqlParameter("@VoucherDate", model.VoucherDate),
+                new SqlParameter("@ReferenceNo", model.ReferenceNo ?? ""),
+                new SqlParameter("@VoucherType", model.VoucherType ?? ""),
                 new SqlParameter("@Entries", SqlDbType.Structured)
                 {
                     TypeName = "dbo.VoucherEntryType",
@@ -84,10 +90,5 @@ namespace MiniAccountManagementSystem.Pages.Admin
             return RedirectToPage("/Admin/VoucharList");
         }
     }
-    public class VoucherEntryInput
-    {
-        public int AccountId { get; set; }
-        public decimal DebitAmount { get; set; }
-        public decimal CreditAmount { get; set; }
-    }
+   
 }
