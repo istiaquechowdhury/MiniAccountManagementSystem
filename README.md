@@ -17,7 +17,7 @@
 4. **Run the EF-Core Migration for ASP.NET Identity**  
    - In Visual Studio’s **Package Manager Console** (or any terminal), run:  
    
-     "dotnet ef database update --project MiniAccountManagementSystem --context ApplicationIdentityDbContext"
+     "dotnet ef database update --project MiniAccountManagementSystem.DataAccess  --startup-project MiniAccountManagementSystem  --context ApplicationIdentityDbContext -- --output-dir ApplicationDB/Migrations"
    
    - This command adds the seven built-in ASP.NET Identity tables to the same database.
 
