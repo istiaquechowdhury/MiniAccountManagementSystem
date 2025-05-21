@@ -35,12 +35,4 @@ That’s it—run the project and navigate using the navigation bar on the first
 
 Newly registered users are automatically placed in the **Viewer** role.
 
-## 📸 Project Screenshots
 
-### 🔐 Login & User Roles
-![01 - Landing Page](ScreenShots/01-LandingPage.png)
-![02 - Login As Admin](ScreenShots/02-LoginAsAdmin.png)
-![03 - Admin's View](ScreenShots/03-AdminsView.png)
-![04 - Add Role Validation](ScreenShots/04-AddRoleValidation.png)
-![05 - Adding Cashier Role](ScreenShots/05-AddingCashierRole.png)
-![06 - Cashier Role Added (Toast)](ScreenShots/06-AddedCashierRoleToasterAlert.png)
