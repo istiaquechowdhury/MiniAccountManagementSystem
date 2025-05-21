@@ -35,107 +35,127 @@ That’s it—run the project and navigate using the navigation bar on the first
 
 Newly registered users are automatically placed in the **Viewer** role.
 
-1. Landing Page
+### 1. Landing Page  
+![Landing Page](ScreenShots/01-LandingPage.png)
 
+### 2. Login As Admin  
+![Login As Admin](ScreenShots/02-LoginAsAdmin.png)
 
-2. Login As Admin
+### 3. Admin's View  
+![Admin's View](ScreenShots/03-AdminsView.png)
 
-3. Admin's View
+### 4. Add Role Validation  
+![Add Role Validation](ScreenShots/04-AddRoleValidation.png)
 
-4. Add Role Validation
+### 5. Adding Cashier Role  
+![Adding Cashier Role](ScreenShots/05-AddingCashierRole.png)
 
-5. Adding Cashier Role
+### 6. Added Cashier Role Toaster Alert  
+![Added Cashier Role Toaster Alert](ScreenShots/06-AddedCashierRoleToasterAlert.png)
 
-6. Added Cashier Role (Toaster Alert)
+### 7. Add User Validation  
+![Add User Validation](ScreenShots/07-AddUserValidation.png)
 
-7. Add User Validation
+### 8. Adding New User  
+![Adding New User](ScreenShots/08-addingnewuser.png)
 
-8. Adding New User
+### 9. New User Added Toaster Alert  
+![New User Added Toaster Alert](ScreenShots/09-NewUserAddedToasteralert.png)
 
-9. New User Added (Toaster Alert)
+### 10. Assigning Access  
+![Assigning Access](ScreenShots/10-AssigningAccess.png)
 
-10. Assigning Access (Step 1)
+### 11. Assigning Access (Step 2)  
+![Assigning Access (Step 2)](ScreenShots/11-AssigningAccess2.png)
 
-11. Assigning Access (Step 2)
+### 12. Access Added  
+![Access Added](ScreenShots/12-addedAccess.png)
 
-12. Added Access
+### 13. Assigned Access Toaster  
+![Assigned Access Toaster](ScreenShots/13-addedAssignedAccessToaster.png)
 
-13. Assigned Access (Toaster Alert)
+### 14. Assigning Role To User  
+![Assigning Role To User](ScreenShots/14AssigningRoleToUser.png)
 
-14. Assigning Role To User (Step 1)
+### 15. Assigning Role To User (Step 2)  
+![Assigning Role To User (Step 2)](ScreenShots/15AssigningRoleToUser2.png)
 
-15. Assigning Role To User (Step 2)
+### 16. Assigned Role To User Successfully Toaster  
+![Assigned Role To User Successfully Toaster](ScreenShots/16-AssignedRoleToUserSuccessfullyToaster.png)
 
-16. Assigned Role Successfully (Toaster Alert)
+### 17. Login As Accountant  
+![Login As Accountant](ScreenShots/17-loginAsAccountant.png)
 
-17. Login As Accountant
+### 18. View Of Accountant  
+![View Of Accountant](ScreenShots/18-ViewOfAccountant.png)
 
-18. Accountant's View
+### 19. Create a Voucher  
+![Create a Voucher](ScreenShots/19-Let us create a vouchar.png)
 
-19. Create a Voucher
-![Create Voucher](ScreenShots/19-Let us create a vouchar.png)
+### 20. Voucher Create Page  
+![Voucher Create Page](ScreenShots/20-VoucharCreatePage.png)
 
-20. Voucher Create Page
+### 21. Debit and Credit Must Be Equal Validation  
+![Debit and Credit Must Be Equal Validation](ScreenShots/21-ValidationDebitandCreditmustbeEqual.png)
 
-21. Validation: Debit and Credit Must Be Equal
+### 22. After Creating Voucher  
+![After Creating Voucher](ScreenShots/22-after creating voucher .png)
 
-22. After Creating Voucher
-![Created Voucher](ScreenShots/22-after creating voucher .png)
+### 23. View Voucher Details  
+![View Voucher Details](ScreenShots/23-afterclickingviewthedetailsIsShowing.png)
 
-23. Viewing Voucher Details
+### 24. Edit Voucher Page  
+![Edit Voucher Page](ScreenShots/24-after clicking edit.png)
 
-24. Editing Voucher
-![Edit Voucher](ScreenShots/24-after clicking edit.png)
+### 25. Debit and Credit Not Equal Error  
+![Debit and Credit Not Equal Error](ScreenShots/25-cannot update if debit and credit are not equal.png)
 
-25. Error: Debit and Credit Not Equal
-![Error](ScreenShots/25-cannot update if debit and credit are not equal.png)
+### 26. Update More Entries  
+![Update More Entries](ScreenShots/26-we can update more entries.png)
 
-26. Update More Entries
-![Update Entries](ScreenShots/26-we can update more entries.png)
+### 27. Two More Entries Added  
+![Two More Entries Added](ScreenShots/27-two more entries added.png)
 
-27. Two More Entries Added
-![More Entries](ScreenShots/27-two more entries added.png)
-
-28. Delete Confirmation
+### 28. Delete Confirmation  
 ![Delete Confirmation](ScreenShots/28-by pressing the delete button this shows.png)
 
-29. After Deletion
-![After Deletion](ScreenShots/29-after pressing ok it is no more.png)
+### 29. Entry Deleted  
+![Entry Deleted](ScreenShots/29-after pressing ok it is no more.png)
 
-30. Chart of Accounts Page
-![Chart Page](ScreenShots/30-This is Char of Account Page.png)
+### 30. Chart of Account Page  
+![Chart of Account Page](ScreenShots/30-This is Char of Account Page.png)
 
-31. Creating Chart of Account
-![Creating Chart](ScreenShots/31-Creating Chart of account.png)
+### 31. Creating Chart of Account  
+![Creating Chart of Account](ScreenShots/31-Creating Chart of account.png)
 
-32. Chart of Account Created
+### 32. Chart of Account Created  
+![Chart of Account Created](ScreenShots/32-CharOfAccountCreated.png)
 
-33. Editing Chart of Account
+### 33. Editing Chart of Account  
+![Editing Chart of Account](ScreenShots/33-EditingChartOfAccount.png)
 
-34. Chart of Account Edited Successfully
-![Edited Chart](ScreenShots/34-ChartOfAccount Edited Successfully.png)
+### 34. Chart of Account Edited Successfully  
+![Chart of Account Edited Successfully](ScreenShots/34-ChartOfAccount Edited Successfully.png)
 
-35. Pressing Delete on Chart
-![Delete Chart](ScreenShots/35-after pressing delete.png)
+### 35. Delete Chart of Account  
+![Delete Chart of Account](ScreenShots/35-after pressing delete.png)
 
-36. Chart of Account Deleted
-![Chart Deleted](ScreenShots/36-the charof accounts deleted.png)
+### 36. Chart of Accounts Deleted  
+![Chart of Accounts Deleted](ScreenShots/36-the charof accounts deleted.png)
 
-37. Registering As Viewer
-![Register Viewer](ScreenShots/37-RegisteringAs a viewer.png)
+### 37. Registering As Viewer  
+![Registering As Viewer](ScreenShots/37-RegisteringAs a viewer.png)
 
-38. Login As Viewer
-![Login Viewer](ScreenShots/38-Login As a viewer.png)
+### 38. Login As Viewer  
+![Login As Viewer](ScreenShots/38-Login As a viewer.png)
 
-39. Viewer Dashboard
-![Viewer Dashboard](ScreenShots/39-this is the login view for Viewer.png)
+### 39. Viewer Login View  
+![Viewer Login View](ScreenShots/39-this is the login view for Viewer.png)
 
-40. Viewer Can See Voucher List Only
-![Viewer View](ScreenShots/40-Can see only the vouchar list .png)
+### 40. Viewer Can Only See Voucher List  
+![Viewer Can Only See Voucher List](ScreenShots/40-Can see only the vouchar list .png)
 
-41. Viewer Cannot Create
-![Cannot Create](ScreenShots/41-ViwerCannot create.png)
-
-
+### 41. Viewer Cannot Create Voucher  
+![Viewer Cannot Create Voucher](ScreenShots/41-ViwerCannot create.png)
 
 
